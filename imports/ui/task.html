@@ -1,0 +1,82 @@
+<template name="task">
+  <li class="{{#if checked}}checked{{/if}} {{#if private}}private{{/if}}">
+    <button class="delete">
+      &times;
+    </button>
+
+    <!--checkbox-->
+    <input type="checkbox" checked="{{checked}}" class="toggle-checked" />
+
+    <!--public/private button-->
+    {{#if isOwner}}
+      <button class="toggle-private">
+        {{#if private}}
+          Private
+        {{else}}
+          Public
+        {{/if}}
+      </button>
+    {{/if}}
+
+    <!--username-->
+    <span class="text"><strong>{{username}}</strong> - {{text}}</span>
+
+    <!--Remind me button-->
+    {{#if isOwner}}
+      <button class="trigger" id="trigger" style="float:right;">
+        Remind me
+      </button>
+    {{/if}}
+
+    <!--import jQuery-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <!--pops up when clicking remind me-->
+      <section class="overlay">
+        <!--Close button-->
+        <div class="wrapper">
+          <button class="trigger" id="close" style="float:right">Close</button>
+        </div>
+
+        <!--date button-->
+        <input type="date" style="float:right" id="myDate" />
+          <script type="text/javascript">
+            var cal11 = new CalendarPopup();
+            cal11.setReturnFunction("setMultipleValues3");
+            function setMultipleValues3(y,m,d) {
+                 document.forms[0].date11_year.value=y;
+                 document.forms[0].date11_month.selectedIndex=m;
+                 document.forms[0].date11_date.selectedIndex=d;
+            }
+          </script>
+        <body style="float:right" onload="SetDate();"></body>
+
+        <!--time button-->
+        <input type="time" id="myTime" style="float:right"/>
+          <script type="text/javascript">
+            var time11 = new TimePopup();
+            time1.setReturnFunction("setMultipleValues3");
+            function setMultipleValues3(h,m,t) {
+                 document.forms[0].time11_hour.value=h;
+                 document.forms[0].time11_minute.selectedIndex=m;
+                 document.forms[0].time11_time.selectedIndex=t;
+            }
+          </script>
+        <body style="float:right" onload="SetDate();"></body>
+
+        <!--Set reminder button-->
+        <div class="wrapper">
+          <button class="trigger" id="remind" style="float:right">Set reminder</button>
+        </div>
+      </section>
+
+    <script>
+    $(document).ready(function() {
+        $(".trigger").click(function() {
+            $(".overlay").toggle();
+        });
+    });
+    </script>
+
+  </li>
+</template>
